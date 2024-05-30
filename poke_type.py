@@ -2,16 +2,16 @@
 import sqlite3
 DATABASE = "poke_type.db"
 
-user_input = input("What would you like to do? /n")
-#Showing the type and corrseponding number
-with sqlite3.connect(DATABASE) as db:
-    cursor = db.cursor()
-    print("Please input the number corresponding to the pokemon type:")
-    sql = "SELECT * FROM Typings"
-    cursor.execute(sql)
-    results = cursor.fetchall()
-    for types in results:
-        print(types[0], types[1])
+def pokemon_type():
+    #Showing the type and correseponding number
+    with sqlite3.connect(DATABASE) as db:
+        cursor = db.cursor()
+        print("Please input the number corresponding to the pokemon type:")
+        sql = "SELECT * FROM Typings"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        for types in results:
+            print(types[0], types[1])
 #Asking what pokemon types to sort by, search by type
 def pokemon_of_type():
     type_1 = input("Type 1: ")
@@ -35,6 +35,21 @@ def pokemon_of_type():
             results = cursor.fetchall()
             for pokemons in results:
                 print(pokemons[0])
-pokemon_of_type()
 
+while True:
+#Selection menu
+    user_input = input("""What would you like to do?
+    1 - Search By Type
+    2 - Search By Name
+    3 - Guessing game
+    4 - Exit
+    """)
+    if user_input == "1":
+        pokemon_type
+        pokemon_of_type()
+    elif user_input == "4":
+        print("Thanks for playing! :D")
+        break
 #Asking which pokemon to search by, search by name
+def type_of_pokemon():
+    
