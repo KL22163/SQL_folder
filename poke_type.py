@@ -48,15 +48,23 @@ def list_of_pokemon():
         #Asking which pokemon to search by, search by name
 def type_of_pokemon():
     print("Please input the number corresponding to the pokemon name.")
-    poke_name = input("Pokemon Number: ")
+    poke_id = input("Pokemon Number: ")
     with sqlite3.connect(DATABASE) as db:
         cursor = db.cursor()
-        sql = f"SELECT type_name FROM Pokemons JOIN Typings ON Pokemons.type_1 = Typings.type_name WHERE Pokemons.id = {poke_name};"
+        sql = f"SELECT poke_name FROM Pokemons WHERE Pokemons.id == {poke_id};"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        for name in results:
+            print(name[0] + ":")
+
+
+        cursor = db.cursor()
+        sql = f"SELECT type_name FROM Pokemons JOIN Typings ON Pokemons.type_1 = Typings.id WHERE Pokemons.id == {poke_id};"
         cursor.execute(sql)
         #Print results- search by name
         results = cursor.fetchall()
-        for names in results:
-            print(names[0],",", names[1])
+        for type_names in results:
+            print(type_names[0] + ",", )
 
 while True:
 #Selection menu
