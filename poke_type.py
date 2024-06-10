@@ -1,9 +1,11 @@
+"""A code which allows you to search for pokemon by their type and name
+By Katrina Lai 2024"""
 #Selecting the SQL database
 import sqlite3
 DATABASE = "poke_type.db"
 
 def pokemon_type():
-    #Showing the type and correseponding number
+#Showing the type and correseponding number
     with sqlite3.connect(DATABASE) as db:
         cursor = db.cursor()
         sql = "SELECT * FROM Typings"
@@ -25,7 +27,7 @@ def pokemon_of_type():
             results = cursor.fetchall()
             for pokemons in results:
                 print(pokemons[0])
-    #If input has two types:
+#If input has two types:
     else:
         with sqlite3.connect(DATABASE) as db:
             cursor = db.cursor()
@@ -35,6 +37,8 @@ def pokemon_of_type():
             results = cursor.fetchall()
             for pokemons in results:
                 print(pokemons[0])
+            if not results:
+                print("There aren't any Pokemon with this type combination.")
 
 #Printing a list of pokemon, ids and names
 def list_of_pokemon():
@@ -45,7 +49,7 @@ def list_of_pokemon():
         results = cursor.fetchall()
         for names in results:
             print(names[0], names[1])
-        #Asking which pokemon to search by, search by name
+#Asking which pokemon to search by, search by name
 def type_of_pokemon():
     print("Please input the number corresponding to the pokemon name.")
     poke_id = input("Pokemon Number: ")
@@ -57,29 +61,38 @@ def type_of_pokemon():
         for name in results:
             print(name[0] + ":")
 
-
         cursor = db.cursor()
-        sql = f"SELECT type_name FROM Pokemons JOIN Typings ON Pokemons.type_1 = Typings.id WHERE Pokemons.id == {poke_id};"
+        sql = f"SELECT type_name FROM Typings JOIN Pokemons ON Pokemons.type_1 = Typings.id WHERE Pokemons.id == {poke_id};"
         cursor.execute(sql)
-        #Print results- search by name
+#Print results- search by name
         results = cursor.fetchall()
         for type_names in results:
-            print(type_names[0] + ",", )
+            print(type_names[0])
+        cursor = db.cursor()
+        sql = f"SELECT type_name FROM Typings JOIN Pokemons ON Pokemons.type_2 = Typings.id WHERE Pokemons.id == {poke_id};"
+        cursor.execute(sql)
+#Print results- search by name
+        results = cursor.fetchall()
+        for type_names in results:
+            print(type_names[0])
 
-while True:
 #Selection menu
-    user_input = input("""What would you like to do?
-    1 - Search By Type
-    2 - Search By Name
-    3 - Guessing game
-    4 - Exit
-    """)
-    if user_input == "1":
-        pokemon_type()
-        pokemon_of_type()
-    elif user_input == "2":
-        list_of_pokemon()
-        type_of_pokemon()
-    elif user_input == "4":
-        print("Thanks for playing! :D")
-        break
+while True:
+    try:   
+        user_input = input("""What would you like to do?
+        1 - Search By Type
+        2 - Search By Name
+        3 - Guessing game
+        4 - Exit
+        """)
+        if user_input == "1":
+            pokemon_type()
+            pokemon_of_type()
+        elif user_input == "2":
+            list_of_pokemon()
+            type_of_pokemon()
+        elif user_input == "4":
+            print("Thanks for playing! :D")
+            break
+    except:
+        print("Invalid input, please try again.")
