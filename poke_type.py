@@ -16,8 +16,20 @@ def pokemon_type():
 #Asking what pokemon types to sort by, search by type
 def pokemon_of_type():
     print("Please input the number corresponding to the pokemon type, if there is no second type leave Type 2 blank.")
-    type_1 = input("Type 1: ")
-    type_2 = input("Type 2: ")
+    while True:
+        type_1 = input("Type 1: ")
+        if 0 < type_1 < 19:
+            break
+                
+        
+    while True:
+        type_2 = input("Type 2: ")
+        if type_2 > 0 and type_2 < 19:
+            break
+        elif type_2 == "":
+            break
+        else:
+            print("That is an invalid input.")
 #If input is only one type:
     if type_2 == "":
         with sqlite3.connect(DATABASE) as db:
