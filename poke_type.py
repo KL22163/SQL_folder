@@ -17,19 +17,21 @@ def pokemon_type():
 def pokemon_of_type():
     print("Please input the number corresponding to the pokemon type, if there is no second type leave Type 2 blank.")
     while True:
-        type_1 = input("Type 1: ")
-        if 0 < type_1 < 19:
-            break
-                
-        
+        try:
+            type_1 = input("Type 1: ")
+            if 0 < int(type_1) < 19:
+                break
+        except:
+            print("That is an invalid input, please try again.")
     while True:
-        type_2 = input("Type 2: ")
-        if type_2 > 0 and type_2 < 19:
-            break
-        elif type_2 == "":
-            break
-        else:
-            print("That is an invalid input.")
+        try:
+            type_2 = input("Type 2: ")
+            if type_2 == "":
+                break
+            elif int(type_2) > 0 and int(type_2) < 19:
+                break
+        except:
+            print("That is an invalid input, please try again.")
 #If input is only one type:
     if type_2 == "":
         with sqlite3.connect(DATABASE) as db:
@@ -63,19 +65,24 @@ def list_of_pokemon():
             print(names[0], names[1])
 #Asking which pokemon to search by, search by name
 def type_of_pokemon():
-    print("Please input the number corresponding to the pokemon name.")
-    poke_id = input("Pokemon Number: ")
-    with sqlite3.connect(DATABASE) as db:
-        cursor = db.cursor()
-        sql = f"SELECT poke_name FROM Pokemons WHERE Pokemons.id == {poke_id};"
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        for name in results:
-            print(name[0] + ":")
-
-        cursor = db.cursor()
-        sql = f"SELECT type_name FROM Typings JOIN Pokemons ON Pokemons.type_1 = Typings.id WHERE Pokemons.id == {poke_id};"
-        cursor.execute(sql)
+        print("Please input the number corresponding to the pokemon name.")
+        while True:
+            try:
+                poke_id = input("Pokemon Number: ")
+                if 0 < int(poke_id) < 152:
+                    break
+            except:
+                print("Invalid input, please try again.")
+        with sqlite3.connect(DATABASE) as db:
+            cursor = db.cursor()
+            sql = f"SELECT poke_name FROM Pokemons WHERE Pokemons.id == {poke_id};"
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            for name in results:
+                print(name[0] + ":")
+            cursor = db.cursor()
+            sql = f"SELECT type_name FROM Typings JOIN Pokemons ON Pokemons.type_1 = Typings.id WHERE Pokemons.id == {poke_id};"
+            cursor.execute(sql)
 #Print results- search by name
         results = cursor.fetchall()
         for type_names in results:
@@ -90,21 +97,19 @@ def type_of_pokemon():
 
 #Selection menu
 while True:
-    try:   
-        user_input = input("""What would you like to do?
-        1 - Search By Type
-        2 - Search By Name
-        3 - Guessing game
-        4 - Exit
-        """)
-        if user_input == "1":
-            pokemon_type()
-            pokemon_of_type()
-        elif user_input == "2":
-            list_of_pokemon()
-            type_of_pokemon()
-        elif user_input == "4":
-            print("Thanks for playing! :D")
-            break
-    except:
+    user_input = input("""What would you like to do?
+    1 - Search By Type
+    2 - Search By Name
+    3 - Exit
+    """)
+    if user_input == "1":
+        pokemon_type()
+        pokemon_of_type()
+    elif user_input == "2":
+        list_of_pokemon()
+        type_of_pokemon()
+    elif user_input == "3":
+        print("Thanks for playing! :D")
+        break
+    else:
         print("Invalid input, please try again.")
