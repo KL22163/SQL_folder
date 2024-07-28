@@ -13,21 +13,27 @@ img{
     background-position: center;
     background-repeat:no-repeat;
     background-size: cover;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .hero-text{
     color: aliceblue;
     position: absolute;
     text-align: center;
-    top: 210px;
+    top: 130px;
     width: 100%;
-    font-size: 4rem;
+    font-size: 7rem;
 }
 
 .two-column{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     gap: 50px;
     width: 80%;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+.info{
+    font-size: 1.25em;
 }
