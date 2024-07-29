@@ -4,6 +4,7 @@
 
 img{
     width: 100%;
+    border-radius: 10px;
 }
 
 
@@ -36,4 +37,23 @@ img{
 
 .info{
     font-size: 1.25em;
+}
+
+.three-column{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 100px;
+    width: 80%;
+    margin: auto;
+}
+
+.card-text{
+    text-align: center;
+    font-size: 50px;
+    color: aliceblue;
+}
+
+.card{
+    background-color: darkslategray;
+    margin-bottom: 40px;
 }
